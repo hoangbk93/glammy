@@ -5,6 +5,7 @@ use App\Product;
 use App\Category;
 use App\ProductImages;
 use App\Comment;
+use App\ProductBrand;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
@@ -22,12 +23,14 @@ class ProductController extends Controller
     }
     public function getAddProduct(){
         $data['catelist'] = Category::all();
+        $data['brands'] = ProductBrand::all();
     	return view('admin.products.add_product',$data);
     }
     public function postAddProduct(AddProductRequest $request){
         //$filename = $request->product_img->getClientOriginalName();
         $products = new Product;
         $products->prod_name = $request->product_name;
+        $products->prod_brand = $request->brand;
         $products->prod_slug = str_slug($request->product_name);
         $products->cate_id = $request->product_cate;
         $products->prod_code = $request->product_code;
@@ -60,12 +63,14 @@ class ProductController extends Controller
         $products = Product::where('id',$id)->get()->all();
         //dd($products);
         //echo '<pre>'; print_r($products); die;
+        $data['brands'] = ProductBrand::all();
         $data['catelist'] = Category::all();
     	return view('admin.products.edit_product',['product'=>$products[0]],$data);
     }
     public function postEditProduct(Request $request, $id){
         $products = Product::find($id);
         $products->prod_name = $request->product_name;
+        $products->prod_brand = $request->brand;
         $products->prod_slug = str_slug($request->product_name);
         $products->cate_id = $request->product_cate;
         $products->prod_code = $request->product_code;
@@ -151,4 +156,51 @@ class ProductController extends Controller
     Comment::where('id',$id)->delete();
     return redirect()->back()->with('flash_message_success','Comment được xóa thành công');
   }
+  public function getBrand(){
+    $data['brands'] = ProductBrand::all();
+    return view('admin.products.brand',$data);
+  }
+  public function postBrand(Request $request){
+    $br = $request->all();
+    $brand = new ProductBrand;
+    $brand->brand_name = $br['brand_name'];
+    $brand->brand_status = $br['brand_status'];
+    $brand->save();
+    return redirect('admin/product/brand')->with('flash_message_success','Them moi brand thanh cong!');
+  }
+  public function getEditBrand($id){
+    $data['brand'] = ProductBrand::find($id);
+    return view('admin.products.edit_brand',$data);
+  }
+  public function postEditBrand(Request $request, $id){
+    $br = $request->all();
+    $brand = ProductBrand::find($id);
+    $brand->brand_name = $br['brand_name'];
+    $brand->brand_status = $br['brand_status'];
+    $brand->save();
+    return redirect('admin/product/brand')->with('flash_message_success','Sua brand thanh cong!');
+
+  }
+  public function deleteBrand($id){
+    ProductBrand::find($id)->delete();
+    return back();
+  }
+  public function brandEditAjax(Request $request){
+    $data = $request->all();
+    //echo "<pre>"; print_r($data); die;
+    $brandArr = explode('#', $data['id']);
+    //echo "<pre>"; print_r($brandArr); die;
+    $arr = ProductBrand::find($brandArr[1]);
+    echo $arr->brand_name;
+    echo '#';
+    echo $arr->brand_status;
+  }
+  public function brandEdited(Request $request){
+    $data = $request->all();
+    $brand = ProductBrand::find($data['id']);
+    $brand->brand_name = $data['name']; 
+    $brand->brand_status = $data['status'];
+    $brand->save();
+  }
 }
+

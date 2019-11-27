@@ -2,7 +2,8 @@
 use App\Http\Controllers\Controller;
 use App\Banner;
 use App\Category;
-
+use App\ProductBrand;
+$brands = ProductBrand::all();
 $ban = Banner::where('banner_status',1)->take(3)->get();
 $cate = Category::All();
 ?>
@@ -23,10 +24,12 @@ $cate = Category::All();
 	<!-- PRICE RANGE -->
 	<div class="sidepanel widget_pricefilter">
 		<h3>Filter by price</h3>
-		<div id="price-range" class="clearfix">
+		<div class="clearfix">
 			<label for="amount">Range:</label>
-			<input type="text" id="amount"/>
-			<div class="padding-range"><div id="slider-range"></div></div>
+			<input type="hidden" id="hiddem_miximum_price" value="0" name="">
+			<input type="hidden" id="hiddem_maximum_price" value="0" name="">
+			<p id="price_show">1000-65000</p> 
+			<div id="price_range"></div> 
 		</div>
 	</div><!-- //PRICE RANGE -->
 
@@ -60,11 +63,11 @@ $cate = Category::All();
 	<!-- SHOP BY BRANDS -->
 	<div class="sidepanel widget_brands">
 		<h3>SHOP BY BRANDS</h3>
-		<input type="checkbox" id="categorymanufacturer1" /><label for="categorymanufacturer1">VERSACE <span>(24)</span></label>
-		<input type="checkbox" id="categorymanufacturer2" /><label for="categorymanufacturer2">J CREW <span>(35)</span></label>
-		<input type="checkbox" id="categorymanufacturer3" /><label for="categorymanufacturer3">Calvin KlEin <span>(48)</span></label>
-		<input type="checkbox" id="categorymanufacturer4" /><label for="categorymanufacturer4">Tommy hilfiger <span>(129)</span></label>
-		<input type="checkbox" id="categorymanufacturer5" /><label for="categorymanufacturer5">Ralph Lauren <span>(69)</span></label>
+		@foreach($brands as $brand)
+		@if($brand->brand_status == 1)
+		<input type="checkbox" class="commmon_selector brand" id="categorymanufacturer{{$brand->id}}" /><label for="categorymanufacturer{{$brand->id}}">{{ $brand->brand_name}} <span>(24)</span></label>
+		@endif
+		@endforeach
 	</div><!-- //SHOP BY BRANDS -->
 	
 	<!-- BANNERS WIDGET -->

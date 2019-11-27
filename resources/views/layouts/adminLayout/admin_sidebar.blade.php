@@ -67,6 +67,7 @@
           <ul class="treeview-menu">
             <li><a href="{{ url('admin/product/view') }}"><i class="fa fa-circle-o"></i> View Product</a></li>
             <li><a href="{{ url('admin/product/add') }}"><i class="fa fa-circle-o"></i> Add product</a></li>
+            <li><a href="{{ url('admin/product/brand') }}"><i class="fa fa-circle-o"></i> Brand</a></li>
           </ul>
         </li>
         <li class="treeview">

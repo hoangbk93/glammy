@@ -30,6 +30,14 @@
                     <input required type="text" name="product_name" class="form-control">
                   </div>
                   <div class="form-group" >
+                    <label>Thương hiệu sản phẩm: </label>
+                    <select name="brand">
+                      @foreach($brands as $brand)
+                      <option value="{{ $brand->id }}">{{ $brand->brand_name }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group" >
                     <label>Giá sản phẩm</label>
                     <input required type="number" name="product_price" class="form-control">
                   </div>

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\Category;
 use App\ProductImages;
+use App\ProductBrand;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 use App\Comment;
 use Illuminate\Http\Request;
 
@@ -28,6 +30,8 @@ class FrontendController extends Controller
     	$data['products'] = Product::orderBy('id','desc')->take(10)->get();
         $data['prod_images'] = ProductImages::where('product_id',$id)->take(3)->get();
         $data['count_product'] = Product::count();
+        $data['brand'] = DB::table('products')->join('product_brand','products.prod_brand','=','product_brand.id')->where('products.id',$id)->first();
+        // echo '<pre/>'; print_r($data['brand']); die;
     	return view('products.product_details',$data);
     }
     public function comment(Request $request, $id){

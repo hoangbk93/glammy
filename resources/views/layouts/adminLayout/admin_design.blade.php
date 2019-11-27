@@ -146,5 +146,55 @@
         });
     });
   </script> 
+  <script type="text/javascript">
+  $(document).ready(function(){
+   
+    $(".brand-name-view").click(function(){
+      $('#submit-add').addClass('hidden');
+      $('#submit-edit').removeClass('hidden');
+      var id = $(this).text();
+      var arr = id.split('#');
+      $('#brand-id-option').text(arr[1]);
+      //alert(arr[1]);
+      $.ajax({
+        type: 'get',
+        url: '/admin/brand-edit-ajax',
+        data: { id:id },
+        success:function(resp){
+          //alert(resp);
+          var arr = resp.split('#');
+          $('#brand-name-edit').val(arr[0]);
+          if (arr[1] == 1) {
+            $('#brand-status-select option:eq(1)').removeAttr('selected');
+            $('#brand-status-select option:eq(0)').attr('selected','selected');
+          }else{
+            $('#brand-status-select option:eq(0)').removeAttr('selected');
+            $('#brand-status-select option:eq(1)').attr('selected','selected');
+          }
+        }
+      });
+    });
+
+    $("#submit-edit").click(function(){
+      var name = $('#brand-name-edit').val();
+      var status = $('#brand-status-select').val();
+      var id = $('#brand-id-option').text();
+      $.ajax({
+        url: '/admin/brand-edited',
+        type: 'get',
+        data: {
+                id:id,
+                name:name,
+                status:status
+              },
+        success:function(resp){
+          $('#update-completed').text('Update brand thành công');
+          $('#update-completed').removeClass('hidden');
+          location.reload(true);
+        }
+      });
+    });
+  });
+  </script>
 </body>
 </html>

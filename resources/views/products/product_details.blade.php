@@ -40,29 +40,36 @@
 				<!-- CLEARFIX -->
 				<div class="clearfix padbot40">
 					<div class="tovar_view_fotos clearfix">
-						<div id="slider2" class="flexslider easyzoom easyzoom--overlay">
-							<ul class="slides">
-								<li><a href="{{ asset('upload/images/products/large/'.$item->prod_img) }}" ><img src="{{ asset('upload/images/products/small/'.$item->prod_img) }}" alt="" /></a></li>
-								@foreach($prod_images as $image)
-								<li><a href="{{ asset('upload/images/products/large/'.$image->image) }}" ><img src="{{ asset('upload/images/products/small/'.$image->image) }}" alt="" /></a></li>
-								@endforeach
-							</ul>
+						<img class="zoom_01" class="img-fluid" src="{{ asset('upload/images/products/small/'.$item->prod_img) }}" alt="" data-zoom-image="{{ asset('upload/images/products/large/'.$item->prod_img) }}" />
+						<div id="gal1">
+ 
+						  <a href="#" data-image="{{ asset('upload/images/products/small/'.$item->prod_img) }}" data-zoom-image="{{ asset('upload/images/products/large/'.$item->prod_img) }}">
+						    <img class="img_01" src="{{ asset('upload/images/products/small/'.$item->prod_img) }}" width="100px" />
+						  </a>
+							@foreach($prod_images as $image)
+						  <a href="#" data-image="{{ asset('upload/images/products/small/'.$image->image) }}" data-zoom-image="{{ asset('upload/images/products/large/'.$image->image) }}">
+						    <img class="img_01" src="{{ asset('upload/images/products/small/'.$image->image) }}" width="100px" />
+						  </a>
+						  @endforeach
 						</div>
-						<div id="carousel2" class="flexslider">
-							<ul class="slides">
-								<li><a href="javascript:void(0);" ><img src="{{ asset('upload/images/products/small/'.$item->prod_img) }}" alt="" /></a></li>
-								@foreach($prod_images as $image)
-								<li><a href="javascript:void(0);" ><img src="{{ asset('upload/images/products/small/'.$image->image) }}" alt="" /></a></li>
-								@endforeach
-							</ul>
-						</div>
+						
 					</div>
-					
+					<script  type="text/javascript">
+				       //initiate the plugin and pass the id of the div containing gallery images
+						$(".zoom_01").elevateZoom({gallery:'gallery_01', cursor: 'pointer', galleryActiveClass: 'active', imageCrossfade: true, loadingIcon: 'http://www.elevateweb.co.uk/spinner.gif'}); 
+
+						//pass the images to Fancybox
+						$(".img_01").bind("click", function(e) {  
+						  var ez =   $('.zoom_01').data('elevateZoom');	
+							$.fancybox(ez.getGalleryList());
+						  return false;
+						});
+				    </script>
 					<div class="tovar_view_description">
 						<div class="tovar_view_title">{{$item->prod_name}}</div>
 						<div class="tovar_article">{{$item->prod_code}}</div>
 						<div class="clearfix tovar_brend_price">
-							<div class="pull-left tovar_brend">Calvin Klein</div>
+							<div class="pull-left tovar_brend">{{$brand->brand_name}}</div>
 							<div class="pull-right tovar_view_price">${{ $item->prod_price }}.00</div>
 						</div>
 						<div class="tovar_color_select">

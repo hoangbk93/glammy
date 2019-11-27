@@ -99,17 +99,8 @@
                     </ul><!-- //MEGA MENU -->
                 </li>
                 <li class="sub-menu"><a href="javascript:void(0);" >Blog</a>
-                    <!-- MEGA MENU -->
-                    <ul class="mega_menu megamenu_col1 clearfix">
-                        <li class="col">
-                            <ol>
-                                <li><a href="#" >Blog</a></li>
-                                <li><a href="#" >Blog Post</a></li>
-                            </ol>
-                        </li>
-                    </ul><!-- //MEGA MENU -->
                 </li>
-                <li class="last sale_menu"><a href="#" >Sale</a></li>
+                <li class="last sale_menu"><a href="#" >Contact</a></li>
             </ul><!-- //MENU -->
         </div><!-- //MENU BLOCK -->
     </div><!-- //CONTAINER -->
