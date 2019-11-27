@@ -26,15 +26,21 @@ Route::group(['prefix'=>'cart/'],function(){
 });
 Route::get('complete','CartController@getComplete');
 
+
 Route::group(['prefix'=>'admin/'],function(){
 	Route::group(['middleware'=>'checkLogin'],function(){
 		// trang dang nhap quan tri
 		Route::get('','AdminController@getLogin');
+		Route::post('','AdminController@postLogin');
 		Route::get('login','AdminController@getLogin');
 		Route::post('login','AdminController@postLogin');
 	});
 	Route::get('logout','AdminController@logout');
 	Route::group(['middleware'=>'checkAdmin'],function(){
+		/*Test edit data bang ajax*/
+		Route::get('brand-edit-ajax','ProductController@brandEditAjax');
+		Route::get('brand-edited','ProductController@brandEdited');
+		/*end test*/
 		Route::get('dashboard','AdminController@dashboard');
 		Route::group(['prefix'=>'user/'],function(){
 			Route::get('view','AdminController@view');
@@ -71,6 +77,13 @@ Route::group(['prefix'=>'admin/'],function(){
 				Route::post('edit/{id}','ProductController@postEditComment');
 				Route::get('delete/{id}','ProductController@deleteComment');
 			});
+			Route::group(['prefix'=>'brand/'],function(){
+				Route::get('','ProductController@getBrand');
+				Route::post('','ProductController@postBrand');
+				Route::get('edit/{id}','ProductController@getEditBrand');
+				Route::post('edit/{id}','ProductController@postEditBrand');
+				Route::get('delete/{id}','ProductController@deleteBrand');
+			});
 		});
 		Route::group(['prefix'=>'banner/'],function(){
 			Route::get('view','BannerController@viewBanner');
@@ -82,6 +95,5 @@ Route::group(['prefix'=>'admin/'],function(){
 		});
 
 	});
-	
-});
 
+});

@@ -29,6 +29,7 @@
   <div class="login-box-body">
     <p class="login-box-msg"><strong>Đăng nhập quản trị</strong></p>
 <div id="loginbox"> 
+<?php echo bcrypt('123456'); ?>
         @if(isset($errors))
             @foreach($errors->all() as $error)
             <div class="alert alert-warning alert-bock">

@@ -19,11 +19,13 @@ use Auth;
 class AdminController extends Controller
 {
     public function getLogin(){
+
     	return view('admin.admin_login');
     }
     public function postLogin(LoginRequest $request){
         $email = $request->email;
         $pass = $request->pass;
+        // dd(Auth::user());
         if (Auth::attempt(['email'=>$email,'password'=>$pass])) {
             return redirect('admin/dashboard');
         }else{
@@ -70,7 +72,7 @@ class AdminController extends Controller
         $email = $request->input('email');
         $pass = $request->input('pass');
         $level = $request->input('level');
-       
+
         $edit = user::find($id);
         $edit->name = $name;
         $edit->user = $user;
